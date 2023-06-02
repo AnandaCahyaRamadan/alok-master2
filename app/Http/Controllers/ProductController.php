@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -13,7 +18,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::all();
+        return view('products.index', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -23,7 +31,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -34,7 +43,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required',
+            'gambar' => 'file|image|max:4000',
+            'deskripsi' => 'required',
+            'harga' => 'required',
+            'category_id' => 'required'
+        ]);
+
+        if ($request->file('gambar')) {
+            $validated['gambar'] = $request->file('gambar')->store('gambar');
+        }
+        Product::create($validated);
+        return redirect()->route('products.index');
     }
 
     /**
@@ -54,9 +75,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        return view('products.edit', compact('categories','product'));
     }
 
     /**
@@ -66,9 +88,23 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $validated = $request->validate([
+            'nama' => 'required',
+            'gambar' => 'file|image|max:4000',
+            'deskripsi' => 'required',
+            'harga' => 'required',
+            'category_id' => 'required'
+        ]);
+        if ($request->hasFile('gambar')){
+            if ($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+            $validasi['gambar'] = $request->file('gambar')->store('gambar');
+        }
+        $product->update($validated);
+        return redirect()->route('products.index');
     }
 
     /**
@@ -77,8 +113,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        Storage::delete($product->gambar);
+        $product->delete();
+        return redirect()->route('products.index');
     }
 }

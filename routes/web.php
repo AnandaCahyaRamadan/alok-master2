@@ -26,6 +26,8 @@ Route::get('/logout', [\App\Http\Controllers\LoginController::class, 'logout']);
 
 Route::resource('/categories', \App\Http\Controllers\CategoryController::class)->middleware('auth');
 
+Route::resource('/products', \App\Http\Controllers\ProductController::class)->middleware('auth');
+
 Route::resource('/roles', \App\Http\Controllers\RoleController::class)->middleware('auth');
 
 Route::resource('/sliders', \App\Http\Controllers\SliderController::class)->middleware('auth');
