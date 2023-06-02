@@ -92,7 +92,7 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required',
-            'gambar' => 'file|image|max:4000',
+            'gambar' => 'image|max:4000',
             'deskripsi' => 'required',
             'harga' => 'required',
             'category_id' => 'required'
@@ -101,7 +101,9 @@ class ProductController extends Controller
             if ($request->oldImage){
                 Storage::delete($request->oldImage);
             }
-            $validasi['gambar'] = $request->file('gambar')->store('gambar');
+            if ($request->file('gambar')) {
+                $validated['gambar'] = $request->file('gambar')->store('gambar');
+            }
         }
         $product->update($validated);
         return redirect()->route('products.index');
