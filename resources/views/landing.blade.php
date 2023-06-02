@@ -39,19 +39,22 @@
     <section id="carousel">
             <div id="carouselExampleCaptions" class="carousel slide">
                 <div class="carousel-indicators">
-                  {{-- <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>   --}}
-                </div>
+                  @foreach ($sliders as $key => $slider)
+                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ $key }}" class="@if ($key == 0) active @endif"></button>
+                @endforeach     </div>
                 <div class="carousel-inner">
-                  <div class="carousel-item active">
-                    @foreach ($sliders as $key => $slider)
+                  @foreach ($sliders as $key => $slider)
+                  <div class="carousel-item @if ($key == 0) active @endif">
                     <img src="{{ asset('storage/' . $slider->gambar) }}" class="w-100">
                     <div class="carousel-caption d-none d-md-block">
                       <h5>{{ $slider->caption }}</h5>
                       <p>{{ $slider->deskripsi }}</p>
                     </div>
-                    @endforeach
+                   
                   </div>
+                  @endforeach
                 </div>
+              
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                   <span class="visually-hidden">Previous</span>

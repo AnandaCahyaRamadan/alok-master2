@@ -44,7 +44,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama' => 'required',
+            'nama' => 'required|min:3',
             'gambar' => 'file|image|max:4000',
             'deskripsi' => 'required',
             'harga' => 'required',
