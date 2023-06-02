@@ -39,14 +39,17 @@
     <section id="carousel">
             <div id="carouselExampleCaptions" class="carousel slide">
                 <div class="carousel-indicators">
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>  </div>
+                  {{-- <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>   --}}
+                </div>
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="https://i.postimg.cc/HnVkC5p4/Untitled-2.png" class="w-100">
+                    @foreach ($sliders as $key => $slider)
+                    <img src="{{ asset('storage/' . $slider->gambar) }}" class="w-100">
                     <div class="carousel-caption d-none d-md-block">
-                      <h5>First slide label</h5>
-                      <p>Some representative placeholder content for the first slide.</p>
+                      <h5>{{ $slider->caption }}</h5>
+                      <p>{{ $slider->deskripsi }}</p>
                     </div>
+                    @endforeach
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
@@ -65,46 +68,19 @@
                 Products
             </h2>
             <div class="row g-4">
+              @foreach ($products as $product)
                 <div class="col-md-3">
                     <div class="card" style="width: 100%;">
-                        <img src="https://cdn1-production-images-kly.akamaized.net/7FrqQNl7apjVHr8VZzP7mt15o_c=/1200x1200/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/1439641/original/042027300_1482131661-reddit.jpg" class="card-img-top" alt="...">
+                        <img src="{{ asset('storage/' . $product->gambar) }}" class="card-img-top" alt="...">
                         <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
+                          <h5 class="card-title">{{ $product->nama }}</h5>
+                          <p class="card-text">{{ $product->harga }}</p>
+                          <p class="card-text">{{ $product->deskripsi }}</p>
+                          <a href="#" class="btn btn-primary">Beli</a>
                         </div>
                       </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img src="https://cdn1-production-images-kly.akamaized.net/7FrqQNl7apjVHr8VZzP7mt15o_c=/1200x1200/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/1439641/original/042027300_1482131661-reddit.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img src="https://cdn1-production-images-kly.akamaized.net/7FrqQNl7apjVHr8VZzP7mt15o_c=/1200x1200/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/1439641/original/042027300_1482131661-reddit.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img src="https://cdn1-production-images-kly.akamaized.net/7FrqQNl7apjVHr8VZzP7mt15o_c=/1200x1200/smart/filters:quality(75):strip_icc():format(jpeg)/kly-media-production/medias/1439641/original/042027300_1482131661-reddit.jpg" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title">Card title</h5>
-                          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
-                        </div>
-                      </div>
-                </div>
+                @endforeach
             </div>
         </div>
 
